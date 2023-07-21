@@ -1,4 +1,4 @@
-package baekjoon.hashmap;
+package baekjoon.datastructure.hashmap;
 
 import java.io.*;
 import java.util.*;
