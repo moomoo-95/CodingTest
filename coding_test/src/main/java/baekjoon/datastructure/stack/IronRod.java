@@ -20,6 +20,7 @@ public class IronRod {
 
     public static void main(String[] args) {
         ironRod();
+        stop();
     }
 
     private static String readInput() {
@@ -30,6 +31,13 @@ public class IronRod {
         try {
             writer.write(output);
             writer.flush();
+        } catch (IOException ignored) {/* ignored */}
+    }
+
+    private static void stop(){
+        try {
+            reader.close();
+            writer.close();
         } catch (IOException ignored) {/* ignored */}
     }
 

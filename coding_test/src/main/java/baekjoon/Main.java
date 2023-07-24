@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         // 제출할 메서드 추가
+        stop();
     }
 
     private static String readInput() {
@@ -18,6 +19,13 @@ public class Main {
         try {
             writer.write(output);
             writer.flush();
+        } catch (IOException ignored) {/* ignored */}
+    }
+
+    private static void stop(){
+        try {
+            reader.close();
+            writer.close();
         } catch (IOException ignored) {/* ignored */}
     }
 }

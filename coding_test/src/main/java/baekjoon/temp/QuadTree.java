@@ -19,6 +19,7 @@ public class QuadTree {
 
     public static void main(String[] args) {
         quadTree();
+        stop();
     }
 
     private static String readInput() {
@@ -29,6 +30,13 @@ public class QuadTree {
         try {
             writer.write(output);
             writer.flush();
+        } catch (IOException ignored) {/* ignored */}
+    }
+
+    private static void stop(){
+        try {
+            reader.close();
+            writer.close();
         } catch (IOException ignored) {/* ignored */}
     }
 

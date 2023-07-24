@@ -27,6 +27,7 @@ public class NumberCard2 {
 
     public static void main(String[] args) {
         numberCard2();
+        stop();
     }
 
     private static String readInput() {
@@ -37,6 +38,13 @@ public class NumberCard2 {
         try {
             writer.write(output);
             writer.flush();
+        } catch (IOException ignored) {/* ignored */}
+    }
+
+    private static void stop(){
+        try {
+            reader.close();
+            writer.close();
         } catch (IOException ignored) {/* ignored */}
     }
 
