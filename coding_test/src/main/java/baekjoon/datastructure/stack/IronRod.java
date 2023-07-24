@@ -4,9 +4,9 @@ import java.io.*;
 
 /**
  * [Input]
- * Line 1 :
+ * Line 1 : 쇠막대기와 레이저의 배치를 나타내는 괄호 표현
  * [Output]
- * Line 1 :
+ * Line 1 : 잘려진 조각의 총 개수
  * [Algorithm]
  * 자료 구조
  * 스택
