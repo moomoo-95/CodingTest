@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
  * 정렬
  * 이분 탐색
  * 해시를 사용한 집합과 맵
+ * [Result]
+ * 메모리 : 165524 kb
+ * 수행시간 : 1312 ms
  */
 public class NumberCard2 {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

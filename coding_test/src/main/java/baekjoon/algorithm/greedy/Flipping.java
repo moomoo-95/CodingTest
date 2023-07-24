@@ -10,6 +10,9 @@ import java.io.*;
  * [Algorithm]
  * 문자열
  * 그리디 알고리즘
+ * [Result]
+ * 메모리 : 14264 kb
+ * 수행시간 : 128 ms
  */
 public class Flipping {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
