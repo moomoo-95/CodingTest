@@ -4,9 +4,10 @@ import java.io.*;
 
 /**
  * [Input]
- * Line 1 :
+ * Line 1 : 영상의 크기 n (2의 제곱 수)
+ * Line 2~n+1 : 영상을 표현한 n*n 개의 점
  * [Output]
- * Line 1 :
+ * Line 1 : 압축 결과
  * [Algorithm]
  * 미확인
  * [Result]
@@ -41,6 +42,17 @@ public class QuadTree {
     }
 
     private static void quadTree() {
-        writeOutput(readInput());
+        int splitSize = Integer.parseInt(readInput());
+        StringBuilder video = new StringBuilder();
+        for(int idx = 0; idx < splitSize; idx++){
+            video.append(readInput());
+        }
+
+        writeOutput(imageCompression(splitSize, video.toString()));
+    }
+
+    private static String imageCompression(int splitSize, String video){
+
+        return video;
     }
 }
