@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.datastructure.stack;
 
 import java.io.*;
 

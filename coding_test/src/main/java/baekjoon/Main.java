@@ -1,6 +1,7 @@
 package baekjoon;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -8,6 +9,23 @@ public class Main {
 
     public static void main(String[] args) {
         // 제출할 메서드 추가
+        char[][] stars = new char[][] {
+                {'*', '*', '*'},
+                {'*', ' ', '*'},
+                {'*', '*', '*'}
+        };
+
+        char[][] result = new char[9][9];
+
+        char[][] lineA = new char[3][9];
+        for (int idx =0; idx<stars.length; idx++){
+            System.arraycopy(stars[idx], 0, lineA[idx], 0, stars[idx].length);
+            System.arraycopy(stars[idx], 0, lineA[idx], stars[idx].length, stars[idx].length);
+            System.arraycopy(stars[idx], 0, lineA[idx], stars[idx].length*2, stars[idx].length);
+        }
+
+        System.arraycopy(stars, 0, result, 0, stars.length);
+        System.arraycopy(stars, 0, result, stars.length, stars.length);
         stop();
     }
 
