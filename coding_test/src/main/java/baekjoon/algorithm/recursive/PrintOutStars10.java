@@ -21,7 +21,7 @@ public class PrintOutStars10 {
     private static int resultSize;
 
     public static void main(String[] args) {
-        printOutStars();
+        printOutStars10();
         stop();
     }
 
@@ -43,7 +43,7 @@ public class PrintOutStars10 {
         } catch (IOException ignored) {/* ignored */}
     }
 
-    private static void printOutStars() {
+    private static void printOutStars10() {
         resultSize = Integer.parseInt(readInput());
         char[][] stars = new char[][] {
                 {'*', '*', '*'},
