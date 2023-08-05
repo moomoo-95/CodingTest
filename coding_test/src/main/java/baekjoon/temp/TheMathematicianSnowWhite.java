@@ -9,11 +9,10 @@ import java.util.Arrays;
  * [Output]
  * Line 1 ~ 7 : 선택된 일곱 난쟁이
  * [Algorithm]
- * 구현
- * 기하학
+ * 브루트포스 알고리즘 (전체 탐색)
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 14332 kb
+ * 수행시간 : 124 ms
  */
 public class TheMathematicianSnowWhite {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

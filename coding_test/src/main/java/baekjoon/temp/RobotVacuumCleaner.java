@@ -11,8 +11,7 @@ import java.util.StringTokenizer;
  * [Output]
  * Line 1 : 작동 멈출때 까지 청소한 칸의 개수
  * [Algorithm]
- * 구현
- * 기하학
+ *
  * [Result]
  * 메모리 : 0 kb
  * 수행시간 : 0 ms
