@@ -55,6 +55,21 @@ public class TheMathematicianSnowWhite {
 
     private static int[] getRealDwarf(int[] nineDwarfs){
         int[] sevenDwarfs = new int[7];
+        int otherSum = Arrays.stream(nineDwarfs).sum() - 100;
+        int[] others = new int[2];
+        for(int i = 0; i < nineDwarfs.length-1; i++){
+            for(int j = i+1; j < nineDwarfs.length; j++) {
+                if(nineDwarfs[i]+nineDwarfs[j] == otherSum){
+                    others[0] = i;
+                    others[1] = j;
+                }
+            }
+        }
+        for(int i = 0, j = 0; i < nineDwarfs.length; i++){
+            if(i == others[0] || i == others[1]) continue;
+            sevenDwarfs[j] = nineDwarfs[i];
+            j++;
+        }
         return sevenDwarfs;
     }
 }
