@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.algorithm.bruteforce;
 
 import java.io.*;
 import java.util.Arrays;
