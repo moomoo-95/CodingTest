@@ -1,5 +1,7 @@
 package baekjoon.temp;
 
+import jdk.jfr.Unsigned;
+
 import java.io.*;
 
 /**
@@ -19,12 +21,7 @@ public class SumOfNumbers {
     private static final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) {
-//        sumOfNumbers();
-        double x = 1;
-        while (x < 350){
-            System.out.println(x + " : " + getNumberCount(x));
-            x++;
-        }
+        sumOfNumbers();
         stop();
     }
 
@@ -51,10 +48,8 @@ public class SumOfNumbers {
     }
 
     private static String getNumberCount(double sum){
-        int result = (int) Math.sqrt(sum*2) + 1;
-        while (sum < (result)*(result+1)/2) result--;
-        return String.valueOf(result);
+        double result = (int) (Math.sqrt(sum*2)) + 1;
+        while (sum < (result * (result + 1) / 2)) result--;
+        return String.valueOf((int) result);
     }
 }
-
-//1 3
