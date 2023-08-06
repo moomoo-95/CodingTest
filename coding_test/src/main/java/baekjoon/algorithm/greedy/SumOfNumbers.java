@@ -1,6 +1,4 @@
-package baekjoon.temp;
-
-import jdk.jfr.Unsigned;
+package baekjoon.algorithm.greedy;
 
 import java.io.*;
 
@@ -13,8 +11,8 @@ import java.io.*;
  * 수학
  * 그리디 알고리즘
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 14312 kb
+ * 수행시간 : 124 ms
  */
 public class SumOfNumbers {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
