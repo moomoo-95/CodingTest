@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.algorithm.simulation;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -11,10 +11,11 @@ import java.util.StringTokenizer;
  * [Output]
  * Line 1 : 작동 멈출때 까지 청소한 칸의 개수
  * [Algorithm]
- *
+ * 구현
+ * 시뮬레이션
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 14460 kb
+ * 수행시간 : 132 ms
  */
 public class RobotVacuumCleaner {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -59,49 +60,57 @@ public class RobotVacuumCleaner {
     private static String getCleanedPixelsCount(int[] robot, int[][] room){
         int result = 0;
         boolean isStopped = false;
-
         while (!isStopped) {
             if(room[robot[0]][robot[1]] == 0) {
-                room[robot[0]][robot[1]] = -1;
+                room[robot[0]][robot[1]] = result+3;
                 result++;
-            } else if(isAvailableChangeDirection(robot, room)){
-            } else{
-
-            }
-
-        }
-
-
-
-        return "Scalene";
-    }
-
-    private static boolean isAvailableChangeDirection(int[] robot, int[][] room){
-        int[] sidedPixel = {
-                robot[0] == 0 ? 1 : room[robot[0]-1][robot[1]],
-                robot[1] == 0 ? 1 : room[robot[0]][robot[1]-1],
-                robot[0] == room.length ? 1 : room[robot[0]+1][robot[1]],
-                robot[1] == room[0].length ? 1 : room[robot[0]][robot[1]+1]
-        };
-
-        for(int idx = 0; idx < 4; idx++){
-            if (sidedPixel[(robot[2]+idx)%4] == 0){
-                robot[2] = (robot[2]+idx)%4;
+            } else if(changeDirection(robot, room)){
                 switch (robot[2]){
                     case 0:
-                        robot[0] -= 1;
+                        robot[0]--;
                         break;
                     case 1:
-                        robot[1] -= 1;
+                        robot[1]++;
                         break;
                     case 2:
-                        robot[0] += 1;
-                        break;
-                    case 3:
-                        robot[1] += 1;
+                        robot[0]++;
                         break;
                     default:
+                        robot[1]--;
                 }
+            } else {
+                switch (robot[2]){
+                    case 0:
+                        if(robot[0] == room.length-1 || room[robot[0]+1][robot[1]] == 1) {isStopped = true;}
+                        else { robot[0]++; }
+                        break;
+                    case 1:
+                        if(robot[1] == 0 || room[robot[0]][robot[1]-1] == 1) {isStopped = true;}
+                        else { robot[1]--; }
+                        break;
+                    case 2:
+                        if(robot[0] == 0 || room[robot[0]-1][robot[1]] == 1) {isStopped = true;}
+                        else { robot[0]--; }
+                        break;
+                    default:
+                        if(robot[1] == room[0].length-1 || room[robot[0]][robot[1]+1] == 1) {isStopped = true;}
+                        else { robot[1]++; }
+                }
+            }
+        }
+        return String.valueOf(result);
+    }
+
+    private static boolean changeDirection(int[] robot, int[][] room){
+        int[] sidedPixel = {
+                robot[0] == 0 ? 1 : room[robot[0]-1][robot[1]],
+                robot[1] == room[0].length-1 ? 1 : room[robot[0]][robot[1]+1],
+                robot[0] == room.length-1 ? 1 : room[robot[0]+1][robot[1]],
+                robot[1] == 0 ? 1 : room[robot[0]][robot[1]-1]
+        };
+        for(int idx = 7;idx>3;idx--){
+            if(sidedPixel[(robot[2]+idx)%4] == 0) {
+                robot[2] = (robot[2]+idx)%4;
                 return true;
             }
         }
