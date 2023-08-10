@@ -43,12 +43,12 @@ public class FindingPath {
     }
 
     private static void findingPath() {
-        int vertexCount = Integer.parseInt(readInput());
-        int[][] edgeGraph = new int[vertexCount][vertexCount];
+        int nodeCount = Integer.parseInt(readInput());
+        int[][] edgeGraph = new int[nodeCount][nodeCount];
         StringTokenizer st;
-        for(int i=0;i<vertexCount;i++){
+        for(int i=0;i<nodeCount;i++){
             st = new StringTokenizer(readInput(), " ");
-            for(int j=0;j<vertexCount;j++) edgeGraph[i][j] = Integer.parseInt(st.nextToken());
+            for(int j=0;j<nodeCount;j++) edgeGraph[i][j] = Integer.parseInt(st.nextToken());
         }
         int[][] pathGraph = getPathGraph(edgeGraph);
         StringBuilder sb = new StringBuilder();
