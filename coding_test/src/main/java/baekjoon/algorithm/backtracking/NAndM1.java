@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
  * [Input]
  * Line 1 : 자연수 범위 (1 ~ N) , 순열 수열의 길이 M
  * [Output]
- * Line 1 ~ nCm : 수열에 대한 순열, 사전 순 정렬
+ * Line 1 ~ nPm : 수열에 대한 순열, 사전 순 정렬
  * [Algorithm]
  * 백트래킹
  * [Result]
