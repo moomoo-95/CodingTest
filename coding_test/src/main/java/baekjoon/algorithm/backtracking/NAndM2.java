@@ -5,16 +5,16 @@ import java.util.StringTokenizer;
 
 /**
  * [Input]
- * Line 1 : 자연수 범위 (1 ~ N) , 순열 수열의 길이 M
+ * Line 1 : 자연수 범위 (1 ~ N) , 조합 수열의 길이 M
  * [Output]
- * Line 1 ~ nCm : 수열에 대한 순열, 사전 순 정렬
+ * Line 1 ~ nCm : 수열에 대한 조합, 사전 순 정렬
  * [Algorithm]
  * 백트래킹
  * [Result]
- * 메모리 : 22264 kb
- * 수행시간 : 260 ms
+ * 메모리 : 14196 kb
+ * 수행시간 : 124 ms
  */
-public class NAndM1 {
+public class NAndM2 {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
     private static final StringBuilder SB = new StringBuilder();
@@ -24,7 +24,7 @@ public class NAndM1 {
     private static int m;
 
     public static void main(String[] args) {
-        nAndM1();
+        nAndM2();
         stop();
     }
 
@@ -46,28 +46,28 @@ public class NAndM1 {
         } catch (IOException ignored) {/* ignored */}
     }
 
-    private static void nAndM1() {
+    private static void nAndM2() {
         StringTokenizer st = new StringTokenizer(readInput(), " ");
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         sequence = new boolean[n];
         output = new int[m];
-        permutation(0);
+        combination(0, 0);
         writeOutput(SB.toString());
     }
 
-    private static void permutation(int depth) {
+    private static void combination(int start, int depth) {
         if(depth == m) {
             for (int n : output) SB.append(n).append(" ");
             SB.append("\n");
             return;
         }
 
-        for(int i = 0; i<n; i++){
+        for(int i = start; i<n; i++){
             if(!sequence[i]) {
                 sequence[i] = true;
                 output[depth] = i+1;
-                permutation(depth+1);
+                combination(i+1, depth+1);
                 sequence[i] = false;
             }
         }
