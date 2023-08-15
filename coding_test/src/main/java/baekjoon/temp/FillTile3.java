@@ -17,6 +17,7 @@ public class FillTile3 {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
     private static int[] numberOfCases;
+    private static int add;
 
     public static void main(String[] args) {
         fillTile3();
@@ -42,16 +43,20 @@ public class FillTile3 {
     }
 
     private static void fillTile3() {
-        int length = Integer.valueOf(readInput());
+        int length = Integer.parseInt(readInput());
         numberOfCases = new int[length+1];
         numberOfCases[0] = 1;
         numberOfCases[1] = 2;
-        numberOfCases[2] = 7;
+        if(length > 1) numberOfCases[2] = 7;
         writeOutput(String.valueOf(getNumberOfCases(length) % 1000000007));
     }
 
     private static int getNumberOfCases(int length){
-        if(numberOfCases[length] == 0) numberOfCases[length] = getNumberOfCases(length-1)*2 + getNumberOfCases(length-2)*3 + getNumberOfCases(length-3)*2;
+        if(numberOfCases[length] == 0) {
+            numberOfCases[length] = getNumberOfCases(length-1)*2 + getNumberOfCases(length-2)*3;
+            if(length>3) add += numberOfCases[length-3];
+            numberOfCases[length] += add*2;
+        }
         return numberOfCases[length];
     }
 }
