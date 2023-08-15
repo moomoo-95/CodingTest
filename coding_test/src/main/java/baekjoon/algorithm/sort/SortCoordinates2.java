@@ -17,12 +17,12 @@ import java.util.StringTokenizer;
  * 메모리 : 96616 kb
  * 수행시간 : 1012 ms
  */
-public class SortCoordinates {
+public class SortCoordinates2 {
     private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) {
-        sortCoordinates();
+        sortCoordinates2();
         stop();
     }
 
@@ -44,7 +44,7 @@ public class SortCoordinates {
         } catch (IOException ignored) {/* ignored */}
     }
 
-    private static void sortCoordinates() {
+    private static void sortCoordinates2() {
         int count = Integer.parseInt(readInput());
         HashMap<Integer, HashSet<Integer>> coordinateMap = new HashMap<>();
         for(int i=0;i<count;i++){
