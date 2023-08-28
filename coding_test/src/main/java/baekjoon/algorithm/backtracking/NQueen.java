@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.algorithm.backtracking;
 
 import java.io.*;
 
