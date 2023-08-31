@@ -1,7 +1,8 @@
 package baekjoon.temp;
 
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * [Input]
@@ -18,10 +19,12 @@ import java.util.StringTokenizer;
 public class Shortcut {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
-    private static final StringBuilder SB = new StringBuilder();
+    private static List<Integer> pointList;
+    private static List<int[]> shortList;
+    private static int[] roadMap;
 
     public static void main(String[] args) {
-        testFormat();
+        shortcut();
         stop();
     }
 
@@ -43,8 +46,66 @@ public class Shortcut {
         } catch (IOException ignored) {/* ignored */}
     }
 
-    private static void testFormat() {
+    private static void shortcut() {
+        inputShortcut();
+        setRoadMap();
+        findShortWay();
+        writeOutput(String.valueOf(roadMap[roadMap.length-1]));
+    }
+
+    private static void inputShortcut() {
         StringTokenizer st = new StringTokenizer(readInput(), " ");
-        writeOutput(SB.toString());
+        int n = Integer.parseInt(st.nextToken());
+        int dest = Integer.parseInt(st.nextToken());
+        HashSet<Integer> pointSet = new HashSet<>();
+        pointSet.add(dest);
+        int[][] sList = new int[n][3];
+        int idx = 0;
+        for (int i=0; i<n; i++){
+            st = new StringTokenizer(readInput(), " ");
+            int[] s = new int[3];
+            s[0] = Integer.parseInt(st.nextToken());
+            s[1] = Integer.parseInt(st.nextToken());
+            s[2] = Integer.parseInt(st.nextToken());
+            if(s[1] > dest || s[1]-s[0]<=s[2]) continue;
+            boolean isUnique = true;
+            for (int j=0;j<i;j++){
+                if(s[0]==sList[j][0] && s[1]==sList[j][1]){
+                    if(s[2] < sList[j][2]) sList[j][2] = s[2];
+                    isUnique = false;
+                    break;
+                }
+            }
+            if(isUnique) {
+                pointSet.add(s[0]);
+                pointSet.add(s[1]);
+                sList[idx++] = s;
+            }
+        }
+
+        pointList = pointSet.stream().sorted().collect(Collectors.toList());
+        shortList = Arrays.stream(sList).filter(s->s[1]!=0).sorted(Comparator.comparingInt(o -> o[1])).collect(Collectors.toList());
+    }
+
+    private static void setRoadMap() {
+        roadMap = new int[pointList.size()];
+        for(int i=0;i<roadMap.length;i++){
+            roadMap[i] = pointList.get(i);
+        }
+    }
+
+    private static void findShortWay(){
+        for(int[] s : shortList){
+            int sourceIdx = pointList.indexOf(s[0]);
+            int targetIdx = pointList.indexOf(s[1]);
+            int distance = roadMap[targetIdx];
+            int shortWay = roadMap[sourceIdx] + s[2];
+            if(distance > shortWay) {
+                roadMap[pointList.indexOf(s[1])] = shortWay;
+                for (int i=targetIdx+1;i<roadMap.length;i++){
+                    roadMap[i] = roadMap[i-1] + pointList.get(i)-pointList.get(i-1);
+                }
+            }
+        }
     }
 }
