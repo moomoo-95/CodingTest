@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.algorithm.dynamic;
 
 import java.io.*;
 import java.util.*;
@@ -11,10 +11,12 @@ import java.util.stream.Collectors;
  * [Output]
  * Line 1 : 세준이가 운전해야할 거리의 최소값
  * [Algorithm]
- *
+ * 다이나믹 프로그래밍
+ * 그래프 이론
+ * 데이크스트라
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 14644 kb
+ * 수행시간 : 140 ms
  */
 public class Shortcut {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
