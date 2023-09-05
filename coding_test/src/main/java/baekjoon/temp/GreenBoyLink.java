@@ -4,10 +4,6 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 /**
- * [Input]
- * Line 1 :
- * [Output]
- * Line 1 :
  * [Algorithm]
  *
  * [Result]
