@@ -13,6 +13,9 @@ import java.util.StringTokenizer;
 public class Ccw {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
+    private static final int STRAIGHT = 0;
+    private static final int CLOCKWISE = -1;
+    private static final int COUNTERCLOCKWISE = 1;
 
     public static void main(String[] args) {
         ccw();
@@ -49,19 +52,31 @@ public class Ccw {
     }
 
     private static int getDirection(int[][] point){
-
-        return 0;
-    }
-
-    private static boolean isStraightLine(){
-        return true;
-    }
-
-    private static boolean isClockwise(){
-        return true;
-    }
-
-    private static boolean isCounterclockwise(){
-        return true;
+        // x = x1
+        if(point[0][0] == point[1][0]) {
+            if(point[1][0] == point[2][0]) return STRAIGHT;
+            if(point[0][1] < point[1][1]) {
+                return point[0][0] < point[2][0] ? CLOCKWISE : COUNTERCLOCKWISE;
+            } else {
+                return point[0][0] < point[2][0] ? COUNTERCLOCKWISE : CLOCKWISE;
+            }
+        }
+        // y = y1
+        if(point[0][1] == point[1][1]) {
+            if(point[1][1] == point[2][1]) return STRAIGHT;
+            if(point[0][0] < point[1][0]) {
+                return point[0][1] < point[2][1] ? COUNTERCLOCKWISE : CLOCKWISE;
+            } else {
+                return point[0][1] < point[2][1] ? CLOCKWISE : COUNTERCLOCKWISE;
+            }
+        }
+        // y = ax + b
+        int y = (point[0][1]-point[1][1])/(point[0][0]-point[1][0]) * (point[2][0] - point[0][0]) + point[0][1];
+        if(y == point[2][1]) return STRAIGHT;
+        if(point[0][0] < point[1][0]) {
+            return y < point[2][1] ? COUNTERCLOCKWISE : CLOCKWISE;
+        } else {
+            return y < point[2][1] ? CLOCKWISE : COUNTERCLOCKWISE;
+        }
     }
 }
