@@ -1,11 +1,11 @@
-package baekjoon.temp;
+package baekjoon.algorithm.math;
 
 import java.io.*;
 import java.util.StringTokenizer;
 
 /**
  * [Algorithm]
- *
+ * 기하학
  * [Result]
  * 메모리 : 14340 kb
  * 수행시간 : 128 ms
