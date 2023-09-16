@@ -7,8 +7,8 @@ import java.util.StringTokenizer;
  * [Algorithm]
  *
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 14340 kb
+ * 수행시간 : 128 ms
  */
 public class Ccw {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
@@ -54,29 +54,17 @@ public class Ccw {
     private static int getDirection(int[][] point){
         // x = x1
         if(point[0][0] == point[1][0]) {
-            if(point[1][0] == point[2][0]) return STRAIGHT;
-            if(point[0][1] < point[1][1]) {
-                return point[0][0] < point[2][0] ? CLOCKWISE : COUNTERCLOCKWISE;
-            } else {
-                return point[0][0] < point[2][0] ? COUNTERCLOCKWISE : CLOCKWISE;
-            }
+            if(point[0][0] == point[2][0]) return STRAIGHT;
+            return (point[0][1] < point[1][1]) == (point[0][0] < point[2][0]) ? CLOCKWISE : COUNTERCLOCKWISE;
         }
         // y = y1
         if(point[0][1] == point[1][1]) {
-            if(point[1][1] == point[2][1]) return STRAIGHT;
-            if(point[0][0] < point[1][0]) {
-                return point[0][1] < point[2][1] ? COUNTERCLOCKWISE : CLOCKWISE;
-            } else {
-                return point[0][1] < point[2][1] ? CLOCKWISE : COUNTERCLOCKWISE;
-            }
+            if(point[0][1] == point[2][1]) return STRAIGHT;
+            return (point[0][0] < point[1][0]) == (point[0][1] < point[2][1]) ? COUNTERCLOCKWISE : CLOCKWISE;
         }
         // y = ax + b
-        int y = (point[0][1]-point[1][1])/(point[0][0]-point[1][0]) * (point[2][0] - point[0][0]) + point[0][1];
+        int y = (point[0][1]-point[1][1])*(point[2][0]-point[0][0])/(point[0][0]-point[1][0])+point[0][1];
         if(y == point[2][1]) return STRAIGHT;
-        if(point[0][0] < point[1][0]) {
-            return y < point[2][1] ? COUNTERCLOCKWISE : CLOCKWISE;
-        } else {
-            return y < point[2][1] ? CLOCKWISE : COUNTERCLOCKWISE;
-        }
+        return (point[0][0] < point[1][0]) == (y < point[2][1]) ? COUNTERCLOCKWISE : CLOCKWISE;
     }
 }
