@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  * 재귀
  * [Result]
  * 메모리 : 14204 kb
- * 수행시간 : 16308 ms
+ * 수행시간 : 124 ms
  */
 public class TreeTraversal {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
