@@ -7,21 +7,19 @@ import java.io.*;
  * 다이나믹 프로그래밍
  * 문자열
  * [Result]
- * 메모리 : 18448 kb
+ * 메모리 : 18240 kb
  * 수행시간 : 148 ms
  */
 public class Lcs {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
-    private static int[][] lcsTable;
+
     public static void main(String[] args) {
         lcs();
         stop();
     }
 
-    private static String readInput() {
-        try { return READER.readLine(); } catch (Exception e){ return ""; }
-    }
+    private static String readInput() { try { return READER.readLine(); } catch (Exception e){ return ""; } }
 
     private static void writeOutput(String output) {
         try {
@@ -42,7 +40,7 @@ public class Lcs {
         char[] seq2 = readInput().toCharArray();
         int xLen = seq1.length;
         int yLen = seq2.length;
-        lcsTable = new int[xLen+1][yLen+1];
+        int[][] lcsTable = new int[xLen+1][yLen+1];
 
         for(int x=1;x<=xLen;x++){
             for(int y=1;y<=yLen;y++){
