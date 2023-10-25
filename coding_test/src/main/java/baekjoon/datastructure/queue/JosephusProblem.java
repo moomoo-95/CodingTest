@@ -1,4 +1,4 @@
-package baekjoon.temp;
+package baekjoon.datastructure.queue;
 
 import java.io.*;
 import java.util.Queue;
@@ -7,10 +7,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * [Algorithm]
- *
+ * 구현
+ * 자료 구조
+ * 큐
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 190988 kb
+ * 수행시간 : 768 ms
  */
 public class JosephusProblem {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
@@ -33,6 +35,9 @@ public class JosephusProblem {
         Integer i;
         int cnt = 1;
         while ((i = queue.poll()) != null){
+            if(queue.isEmpty()) { SB.append(i); break; }
+            int temp = queue.size()+1;
+            if(temp < k-cnt) cnt += temp*((k-cnt)/temp);
             if(cnt<k){
                 queue.add(i);
                 cnt++;
@@ -41,7 +46,6 @@ public class JosephusProblem {
                 SB.append(i).append(", ");
             }
         }
-        SB.setLength(SB.length()-2);
         SB.append(">");
         writeOutput(SB.toString());
     }
