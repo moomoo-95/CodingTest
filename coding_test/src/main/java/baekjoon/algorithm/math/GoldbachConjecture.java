@@ -1,8 +1,6 @@
-package baekjoon.temp;
+package baekjoon.algorithm.math;
 
 import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * [Algorithm]
@@ -11,14 +9,14 @@ import java.util.stream.Collectors;
  * 소수 판정
  * 에라토스테네스의 체
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 15492 kb
+ * 수행시간 : 168 ms
  */
 public class GoldbachConjecture {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
     private static final StringBuilder SB = new StringBuilder();
-    private static final Set<Integer> primes = new HashSet<>();
+    private static final boolean[] primes = new boolean[10001];
 
     public static void main(String[] args) { goldbachConjecture(); stop(); }
 
@@ -28,14 +26,13 @@ public class GoldbachConjecture {
 
     private static void goldbachConjecture() {
         int t = Integer.parseInt(readInput());
+        setPrime();
         for(int i=0;i<t;i++){
             int n = Integer.parseInt(readInput());
-            setPrime(n);
-            List<Integer> list = primes.stream().filter(p->(n/2)>=p).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
-            for(int j=0;j<list.size();j++){
-                int p = list.get(j);
-                if(primes.contains(p)&&primes.contains(n-p)) {
-                    SB.append(p).append(" ").append(n-p).append("\n");
+            for(int j=n/2;j>1;j--){
+                if(primes[j]) continue;
+                if(!primes[j]&&!primes[n-j]) {
+                    SB.append(j).append(" ").append(n-j).append("\n");
                     break;
                 }
             }
@@ -43,19 +40,13 @@ public class GoldbachConjecture {
         writeOutput(SB.toString());
     }
 
-    private static void setPrime(int n){
-        for(int i=n ; i>1 ; i--){
-            if(isPrime(i)){
-                if(primes.contains(i)) return;
-                primes.add(i);
+    private static void setPrime(){
+        primes[0] = primes[1] = true;
+        for( int i = 2; i <= Math.sqrt(primes.length);i++){
+            if(primes[i]) continue;
+            for(int j = i * i; j < primes.length; j+=i){
+                primes[j] = true;
             }
         }
-    }
-
-    private static boolean isPrime(int n){
-        for(int i=2 ; i<=(int)Math.sqrt(n) ; i++){
-            if(n%i==0) return false;
-        }
-        return true;
     }
 }
