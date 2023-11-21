@@ -1,16 +1,19 @@
-package baekjoon.temp;
+package baekjoon.algorithm.simulation;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
  * [Algorithm]
- *
+ * 구현
+ * 그래프 이론
+ * 그래프 탐색
+ * 시뮬레이션
+ * 너비 우선 탐색
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 28544 kb
+ * 수행시간 : 796 ms
  */
 public class BabyShark {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
@@ -31,15 +34,14 @@ public class BabyShark {
 
     private static void babyShark() {
         n = Integer.parseInt(readInput());
-        int[][] space = new int[n][n];
+        space = new int[n][n];
         StringTokenizer st;
         for(int i=0;i<n;i++){
             st = new StringTokenizer(readInput(), " ");
             for(int j=0;j<n;j++){
                 int tmp = Integer.parseInt(st.nextToken());
-                if(tmp == 0){continue;}
-                else if(tmp == 9) {baby = new int[]{2, i,j};}
-                else {
+                if(tmp == 9) {baby = new int[]{2, i,j};}
+                else if(tmp != 0) {
                     space[i][j] = tmp;
                     if(tmp >= 2) {
                         fishes.add(new Integer[]{tmp, i, j});
@@ -49,18 +51,29 @@ public class BabyShark {
                 }
             }
         }
-        Integer findFish = findingNearestFish();
-        while (findFish != null) {
-            eatingFish(findFish);
-            findFish = findingNearestFish();
-        }
+        while (findingNearestFish());
         writeOutput(String.valueOf(time));
     }
 
-    private static void eatingFish(int idx){
-        Integer[] fish = edibleFishes.remove(idx);
+    private static boolean findingNearestFish(){
+        if(edibleFishes.isEmpty()) return false;
+        boolean[][] check = new boolean[n][n];
+        int[][] distance = new int[n][n];
+        distance[baby[1]][baby[2]] = 500;
+        setDistance(check, distance, baby[1], baby[2]);
+        edibleFishes.sort((o1, o2) -> {
+            int r = distance[o2[1]][o2[2]] - distance[o1[1]][o1[2]];
+            if(r == 0) r = o1[1] - o2[1];
+            if(r == 0) r = o1[2] - o2[2];
+            return r;
+        });
+        Integer[] fish = edibleFishes.remove(0);
+        int add = 500 - distance[fish[1]][fish[2]];
+        if(add == 500) return false;
+        time += add;
         baby[1] = fish[1];
         baby[2] = fish[2];
+
         if(++exp==baby[0]) {
             exp = 0;
             baby[0]++;
@@ -68,29 +81,44 @@ public class BabyShark {
             for(int i = 0; i< fishes.size(); i++){
                 if(fishes.get(i)[0]<baby[0]){
                     edibleFishes.add(fishes.remove(i));
+                    i--;
                 }
             }
         }
+        return true;
     }
 
-    private static Integer findingNearestFish(){
-        int[][] distance = new int[n][n];
-        distance[baby[1]][baby[2]] = 500;
-        setDistance(distance, baby[1], baby[2]);
-        Integer idx = null;
-//        Integer dist = -1;
-//        for(int i=0;i<edibleFishes.size();i++){
-//            Integer[] f = edibleFishes.get(i);
-//            dist = getDistance(baby[1], baby[2], f[1], f[2]);
-//        }
-        return idx;
-    }
-
-    private static void setDistance(int[][] distance, int x, int y){
-        if(isMovable(x-1, y)) setDistance(distance, x-1, y);
-        if(isMovable(x, y+1)) setDistance(distance, x, y+1);
-        if(isMovable(x+1, y)) setDistance(distance, x+1, y);
-        if(isMovable(x, y-1)) setDistance(distance, x, y-1);
+    private static void setDistance(boolean[][] check, int[][] distance, int x, int y){
+        if(check[x][y] == true) return;
+        check[x][y] = true;
+        if(isMovable(x-1, y)) {
+            if(distance[x-1][y] < distance[x][y]-1) {
+                distance[x-1][y] = distance[x][y] - 1;
+                check[x-1][y] = false;
+            }
+            setDistance(check, distance, x-1, y);
+        }
+        if(isMovable(x, y+1)) {
+            if(distance[x][y+1] < distance[x][y]-1) {
+                distance[x][y+1] = distance[x][y] - 1;
+                check[x][y+1] = false;
+            }
+            setDistance(check, distance, x, y+1);
+        }
+        if(isMovable(x+1, y)) {
+            if(distance[x+1][y] < distance[x][y]-1){
+                distance[x+1][y] = distance[x][y]-1;
+                check[x+1][y] = false;
+            }
+            setDistance(check, distance, x+1, y);
+        }
+        if(isMovable(x, y-1)) {
+            if(distance[x][y-1] < distance[x][y]-1){
+                distance[x][y-1] = distance[x][y]-1;
+                check[x][y-1] = false;
+            }
+            setDistance(check, distance, x, y-1);
+        }
     }
 
     private static boolean isMovable(int x, int y){
