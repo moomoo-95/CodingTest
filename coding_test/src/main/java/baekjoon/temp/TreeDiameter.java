@@ -1,19 +1,27 @@
 package baekjoon.temp;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
  * [Algorithm]
- *
+ * 그래프 이론
+ * 그래프 탐색
+ * 트리
+ * 깊이 우선 탐색
  * [Result]
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 79936 kb
+ * 수행시간 : 836 ms
  */
 public class TreeDiameter {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
-    private static final StringBuilder SB = new StringBuilder();
+    static List<Node>[] list;
+    static boolean[] visited;
+    static int max = 0;
+    static int peer;
 
     public static void main(String[] args) { treeDiameter(); stop(); }
 
@@ -22,47 +30,55 @@ public class TreeDiameter {
     private static void stop(){ try { READER.close(); WRITER.close(); } catch (IOException ignored) {/* ignored */} }
 
     private static void treeDiameter() {
-        int n = Integer.parseInt(readInput());
-        int [][] adjMap = new int[n][n];
+        int N = Integer.parseInt(readInput());
+        list = new ArrayList[N];
+        for(int i = 0; i < N; i++) {
+            list[i] = new ArrayList<>();
+        }
         StringTokenizer st;
-        for(int i=0;i<n;i++){
+        for(int i = 0; i < N; i++) {
             st = new StringTokenizer(readInput(), " ");
-            int node = Integer.parseInt(st.nextToken());
-            while (true){
-                int target = Integer.parseInt(st.nextToken());
-                if(target == -1) break;
-                int dist = Integer.parseInt(st.nextToken());
-                adjMap[node-1][target-1] = dist;
+            int target = Integer.parseInt(st.nextToken());
+            while(true) {
+                int node = Integer.parseInt(st.nextToken());
+                if(node == -1) break;
+                int cost = Integer.parseInt(st.nextToken());
+                list[target-1].add(new Node(node-1, cost));
             }
         }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(i==j || adjMap[i][j] != 0) continue;
-                adjMap[i][j] = 10000;
-            }
-        }
-        floydWarshall(adjMap);
-        int r = 0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(r < adjMap[i][j]) r = adjMap[i][j];
-            }
-        }
-        writeOutput(String.valueOf(r));
+
+        visited = new boolean[N];
+        dfs(0, 0);
+
+        visited = new boolean[N];
+        dfs(peer, 0);
+
+        writeOutput(String.valueOf(max));
     }
 
-    private static void floydWarshall(int[][] adjMap) {
-        for(int i = 0; i < adjMap.length; i++){
-            for(int j = 0; j < adjMap.length; j++) {
-                if( adjMap[i][j] > 0){
-                    for(int k = 0; k < adjMap.length; k++) {
-                        if(adjMap[k][i] > 0) {
-                            if(adjMap[k][j] == 0 || adjMap[k][j] > adjMap[k][i] + adjMap[i][j])
-                                adjMap[k][j] = adjMap[k][i] + adjMap[i][j];
-                        }
-                    }
-                }
+    public static void dfs(int x, int len) {
+        if(len > max) {
+            max = len;
+            peer = x;
+        }
+        visited[x] = true;
+        for(int i = 0; i < list[x].size(); i++) {
+            Node node = list[x].get(i);
+            if(!visited[node.n]) {
+                dfs(node.n, node.cost + len);
+                visited[node.n] = true;
             }
+        }
+
+    }
+
+    static class Node {
+        int n;
+        int cost;
+
+        Node(int n, int cost) {
+            this.n = n;
+            this.cost = cost;
         }
     }
 }
