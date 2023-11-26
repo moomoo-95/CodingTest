@@ -1,4 +1,4 @@
-package baekjoon.algorithm.graphsearch;
+package baekjoon.temp;
 
 import java.io.*;
 import java.util.ArrayList;
