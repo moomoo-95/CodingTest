@@ -5,7 +5,8 @@ import java.util.*;
 
 /**
  * [Algorithm]
- *
+ * 구현
+ * 시뮬레이션
  * [Result]
  * 메모리 : 16420 kb
  * 수행시간 : 184 ms
