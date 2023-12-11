@@ -1,7 +1,6 @@
 package baekjoon.temp;
 
 import java.io.*;
-import java.util.StringTokenizer;
 
 /**
  * [Algorithm]
@@ -13,7 +12,8 @@ import java.util.StringTokenizer;
 public class PipeTransfer1 {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
-    private static final StringBuilder SB = new StringBuilder();
+    private static char[][] home;
+    private static Pipe pipe = new Pipe();
 
     public static void main(String[] args) { pipeTransfer1(); stop(); }
 
@@ -22,7 +22,22 @@ public class PipeTransfer1 {
     private static void stop(){ try { READER.close(); WRITER.close(); } catch (IOException ignored) {/* ignored */} }
 
     private static void pipeTransfer1() {
-        StringTokenizer st = new StringTokenizer(readInput(), " ");
-        writeOutput(SB.toString());
+        int n = Integer.parseInt(readInput());
+        home = new char[n][n];
+        for(int i=0;i<n;i++){
+            home[i] = readInput().replace(" ", "").toCharArray();
+        }
+        int r = 0;
+        writeOutput(String.valueOf(r));
+    }
+
+    private static class Pipe{
+        int[] lp, rp;
+        Pipe(){lp = new int[]{0, 0}; rp = new int[]{0,1};}
+
+        private int getShape(){
+            // 가로 : 1 / 세로 : -1/ 대각선 : 0;
+            return lp[0]-rp[0]+rp[1]-lp[1];
+        }
     }
 }
