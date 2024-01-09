@@ -1,24 +1,22 @@
-package baekjoon.temp;
+package baekjoon.algorithm.backtracking;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 /**
  * [Algorithm]
- *
+ * 백트래킹
  * [Result]
  * 결과 1
- * 메모리 : 0 kb
- * 수행시간 : 0 ms
+ * 메모리 : 19140 kb
+ * 수행시간 : 392 ms
  */
 public class Bishop {
     private static final BufferedReader READER = new BufferedReader(new InputStreamReader(System.in));
     private static final BufferedWriter WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
     private static int[][] chessboard;
-    private static List<Integer[]> bishopPoint = new ArrayList<>();
     private static int N;
+    private static int tr = 0;
     private static int r = 0;
 
     public static void main(String[] args) {bishop();stop();}
@@ -38,28 +36,38 @@ public class Bishop {
                 if(st.nextToken().equals("1")) chessboard[i][j] = 1;
             }
         }
-
-        for (int i = 0; i< N; i++){
-            for (int j = 0; j< N; j++){
-                if(isAvailablePoint(i,j)) bishopPoint.add(new Integer[]{i,j});
-            }
-        }
-
-        writeOutput(String.valueOf(r));
+        putDownBishop(0, 0, 0);
+        r=tr;tr=0;
+        putDownBishop(0,1,0);
+        writeOutput(String.valueOf(r+tr));
     }
 
-    public static void putDownBishop(int x, int y){
-        for (int i = x; i< N; i++){
-            for (int j = y+1; j< N; j++){
-                if(isAvailablePoint(i,j)) bishopPoint.add(new Integer[]{i,j});
+    public static void putDownBishop(int x, int y, int cnt){
+        tr = Math.max(cnt, tr);
+        if(x>=N) return;
+        int nx=x, ny=0;
+        if(y>=N-2){
+            nx=x+1;
+            if(y%2==0){
+                ny=1;
             }
         }
+        else { ny=y+2; }
+        if(isAvailablePoint(x,y)) {
+            chessboard[x][y] = 2;
+            putDownBishop(nx, ny, cnt+1);
+            chessboard[x][y] = 1;
+        }
+        putDownBishop(nx, ny, cnt);
     }
 
     private static boolean isAvailablePoint(int x, int y){
-        if(chessboard[x][y] == 1) return false;
-        for (Integer[] b:bishopPoint){
-            if(Math.abs(b[0]-x)==Math.abs(b[1]-y)) return false;
+        if(chessboard[x][y]==0) return false;
+        boolean s = (x-y)%2==0;
+        for (int i = 0; i< N; i++){
+            for (int j = (i%2==0)==s?0:1; j< N; j+=2){
+                if(chessboard[i][j]==2&&Math.abs(i-x)==Math.abs(j-y)) return false;
+            }
         }
         return true;
     }
